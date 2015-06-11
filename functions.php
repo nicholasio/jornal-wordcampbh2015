@@ -17,6 +17,8 @@ if ( ! function_exists('jornal_setup_features') ) {
 
 		add_theme_support( 'title-tag' );
 
+		add_image_size( 'post-default', 320, 150, true );
+
 	}
 
 }
@@ -34,4 +36,6 @@ function jornal_enqueue_scripts() {
 }
 
 add_action('wp_enqueue_scripts', 'jornal_enqueue_scripts');
+
+
 
