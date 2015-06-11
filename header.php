@@ -21,6 +21,14 @@
 
 <body>
 
+    <?php 
+        $restore = false;
+
+        if ( is_multisite() && 1 != get_current_blog_id() ) {
+            switch_to_blog(1);
+            $restore = true;
+        }
+    ?>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
         <div class="container">
@@ -32,11 +40,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><?php bloginfo('name'); ?></a>
+                <a class="navbar-brand" href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <?php
+
                     wp_nav_menu(
                         array(
                             'theme_location' => 'main-menu',
@@ -47,9 +56,16 @@
                             'walker'         => new Odin_Bootstrap_Nav_Walker()
                         )
                     );
+
                     ?>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
+
+    <?php 
+        if ( $restore ) {
+            restore_current_blog();
+        }
+    ?>

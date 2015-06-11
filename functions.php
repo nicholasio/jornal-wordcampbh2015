@@ -37,5 +37,35 @@ function jornal_enqueue_scripts() {
 
 add_action('wp_enqueue_scripts', 'jornal_enqueue_scripts');
 
+/**
+ * Só quero que esta configuração tenha efeito se o multisite estiver habilitado e
+ * se estiver no site principal (cujo id é 1)
+ */
+if ( is_multisite() && 1 == get_current_blog_id() ) {
+	add_filter('wpcpn_posts_section', 'jornal_wpcpn_posts_section');
+}
 
+
+function jornal_wpcpn_posts_section() {
+
+    return array(
+        //the key of this array defines a group, each group creates a tab
+        'home_posts' => array( 
+            //the name of the group
+            'name'  => 'Home Posts', 
+            'sections'  => array( //the sections arrays holds all sections definitions
+                    'news' => array( //the key is the slug of the sections
+                         'name'               => 'News', //The Name
+                         'description'        => 'News section', //Descriptions
+                         'max_posts'          => 6, //Max Posts in this sections
+                         //sites => array(2, 3, 4) //'all' or specify the blogs_id that you canpull posts
+                         'sites'              => 'all',
+                         //should posts of main site be included?
+                         'include_main_site'  => false 
+                    )
+                 ), //sections
+        )
+
+    );
+}
 
