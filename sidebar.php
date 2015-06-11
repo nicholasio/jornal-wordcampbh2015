@@ -1,6 +1,9 @@
-<p class="lead">Shop Name</p>
+<p class="lead"><a href="<?php echo home_url(); ?>"><?php echo bloginfo('name'); ?></a></p>
 <div class="list-group">
-    <a href="#" class="list-group-item">Category 1</a>
-    <a href="#" class="list-group-item">Category 2</a>
-    <a href="#" class="list-group-item">Category 3</a>
+	<?php 
+		$categories = get_categories();
+		if ( $categories ) : foreach( $categories as $category ) : 
+	?>
+    	<a href="<?php echo get_category_link($category->term_id); ?>" class="list-group-item"><?php echo $category->cat_name; ?></a>
+    <?php endforeach; endif; ?>
 </div>
